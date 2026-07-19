@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>My Music Player</title>
+
+<style>
+
+/* ============================= */
+/* RESET */
+/* ============================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+
+/* ============================= */
+/* BODY */
+/* ============================= */
+
+body {
+  background: linear-gradient(
+    135deg,
+    #121212,
+    #1b1b1b
+  );
+
+  color: white;
+
+  min-height: 100vh;
+
+  padding-bottom: 50px;
+}
+
+
+/* ============================= */
+/* HEADER */
+/* ============================= */
+
+header {
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  padding: 25px;
+
+}
+
+.logo {
+
+  font-size: 28px;
+
+  font-weight: bold;
+
+  color: #1ed760;
+
+}
+
+
+/* ============================= */
+/* SEARCH */
+/* ============================= */
+
+.search-box {
+
+  width: 90%;
+
+  max-width: 600px;
+
+  margin: 10px auto 20px;
+
+}
+
+#search {
+
+  width: 100%;
+
+  padding: 15px 20px;
+
+  border: none;
+
+  outline: none;
+
+  border-radius: 30px;
+
+  background: #282828;
+
+  color: white;
+
+  font-size: 16px;
+
+}
+
+
+/* ============================= */
+/* PLAYER */
+/* ============================= */
+
+.player {
+
+  width: 90%;
+
+  max-width: 600px;
+
+  margin: auto;
+
+  text-align: center;
+
+  padding: 20px;
+
+}
+
+
+/* ============================= */
+/* ALBUM COVER */
+/* ============================= */
+
+#albumCover {
+
+  width: 280px;
+
+  height: 280px;
+
+  object-fit: cover;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0,0,0,0.7);
+
+  margin: 10px auto 25px;
+
+  display: block;
+
+}
+
+
+/* ============================= */
+/* SONG INFO */
+/* ============================= */
+
+#songTitle {
+
+  font-size: 26px;
+
+  margin-bottom: 8px;
+
+}
+
+#artist {
+
+  color: #aaa;
+
+  font-size: 16px;
+
+}
+
+
+/* ============================= */
+/* PROGRESS */
+/* ============================= */
+
+.progress-container {
+
+  margin-top: 25px;
+
+}
+
+.time {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  color: #aaa;
+
+  font-size: 13px;
+
+  margin-bottom: 5px;
+
+}
+
+
+#progress {
+
+  width: 100%;
+
+  cursor: pointer;
+
+  accent-color: #1ed760;
+
+}
+
+
+/* ============================= */
+/* CONTROLS */
+/* ============================= */
+
+.controls {
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 35px;
+
+  margin: 25px 0;
+
+}
+
+
+.controls button {
+
+  background: transparent;
+
+  color: white;
+
+  border: none;
+
+  font-size: 28px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+
+}
+
+
+.controls button:hover {
+
+  transform: scale(1.15);
+
+}
+
+
+#play {
+
+  width: 65px;
+
+  height: 65px;
+
+  border-radius: 50%;
+
+  background: #1ed760;
+
+  color: black;
+
+  font-size: 25px;
+
+}
+
+
+/* ============================= */
+/* VOLUME */
+/* ============================= */
+
+.volume {
+
+  margin: 10px;
+
+}
+
+
+#volume {
+
+  width: 150px;
+
+  accent-color: #1ed760;
+
+}
+
+
+/* ============================= */
+/* PLAYLIST */
+/* ============================= */
+
+.playlist {
+
+  width: 90%;
+
+  max-width: 650px;
+
+  margin: 30px auto;
+
+}
+
+
+.playlist h2 {
+
+  margin-bottom: 15px;
+
+}
+
+
+/* ============================= */
+/* SONG ITEM */
+/* ============================= */
+
+.song {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 12px;
+
+  margin-bottom: 8px;
+
+  background: #181818;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+
+}
+
+
+.song:hover {
+
+  background: #282828;
+
+}
+
+
+.song.active {
+
+  background: #1ed760;
+
+  color: black;
+
+}
+
+
+.song img {
+
+  width: 55px;
+
+  height: 55px;
+
+  object-fit: cover;
+
+  border-radius: 8px;
+
+}
+
+
+.song-info {
+
+  flex: 1;
+
+}
+
+
+.song-info h3 {
+
+  font-size: 16px;
+
+}
+
+
+.song-info p {
+
+  font-size: 13px;
+
+  color: #999;
+
+  margin-top: 5px;
+
+}
+
+
+.song.active p {
+
+  color: #222;
+
+}
+
+
+/* ============================= */
+/* MOBILE */
+/* ============================= */
+
+@media (max-width: 600px) {
+
+  #albumCover {
+
+    width: 230px;
+
+    height: 230px;
+
+  }
+
+
+  .controls {
+
+    gap: 20px;
+
+  }
+
+
+  #songTitle {
+
+    font-size: 22px;
+
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ============================= -->
+<!-- HEADER -->
+<!-- ============================= -->
+
+<header>
+
+  <div class="logo">
+
+    🎵 MY MUSIC
+
+  </div>
+
+</header>
+
+
+<!-- ============================= -->
+<!-- SEARCH -->
+<!-- ============================= -->
+
+<div class="search-box">
+
+  <input
+
+    type="text"
+
+    id="search"
+
+    placeholder="🔍 Search songs..."
+
+  >
+
+</div>
+
+
+<!-- ============================= -->
+<!-- MUSIC PLAYER -->
+<!-- ============================= -->
+
+<section class="player">
+
+
+  <!-- ALBUM COVER -->
+
+  <img
+
+    id="albumCover"
+
+    src="https://via.placeholder.com/500"
+
+    alt="Album Cover"
+
+  >
+
+
+  <!-- SONG TITLE -->
+
+  <h1 id="songTitle">
+
+    Select a Song
+
+  </h1>
+
+
+  <!-- ARTIST -->
+
+  <p id="artist">
+
+    Choose a song from playlist
+
+  </p>
+
+
+  <!-- PROGRESS -->
+
+  <div class="progress-container">
+
+
+    <div class="time">
+
+      <span id="currentTime">
+
+        0:00
+
+      </span>
+
+
+      <span id="duration">
+
+        0:00
+
+      </span>
+
+    </div>
+
+
+    <input
+
+      type="range"
+
+      id="progress"
+
+      min="0"
+
+      max="100"
+
+      value="0"
+
+    >
+
+  </div>
+
+
+  <!-- CONTROLS -->
+
+  <div class="controls">
+
+
+    <button id="prev">
+
+      ⏮
+
+    </button>
+
+
+    <button id="play">
+
+      ▶
+
+    </button>
+
+
+    <button id="next">
+
+      ⏭
+
+    </button>
+
+
+  </div>
+
+
+  <!-- VOLUME -->
+
+  <div class="volume">
+
+    🔊
+
+
+    <input
+
+      type="range"
+
+      id="volume"
+
+      min="0"
+
+      max="1"
+
+      step="0.01"
+
+      value="1"
+
+    >
+
+  </div>
+
+
+</section>
+
+
+<!-- ============================= -->
+<!-- PLAYLIST -->
+<!-- ============================= -->
+
+<section class="playlist">
+
+
+  <h2>
+
+    🎵 10 Songs
+
+  </h2>
+
+
+  <div id="songList"></div>
+
+
+</section>
+
+
+<!-- AUDIO -->
+
+<audio id="audio"></audio>
+
+
+<script>
+
+
+// ========================================
+// 🎵 10 LOCAL SONGS
+// ========================================
+
+const songs = [
+
+  {
+    title: "Dreams",
+    artist: "Artist 1",
+    audio: "music/song1.mp3",
+    cover: "https://via.placeholder.com/500/1ed760/000000?text=Song+1"
+  },
+
+
+  {
+    title: "Night Drive",
+    artist: "Artist 2",
+    audio: "music/song2.mp3",
+    cover: "https://via.placeholder.com/500/ff0055/ffffff?text=Song+2"
+  },
+
+
+  {
+    title: "Summer Vibes",
+    artist: "Artist 3",
+    audio: "music/song3.mp3",
+    cover: "https://via.placeholder.com/500/00aaff/ffffff?text=Song+3"
+  },
+
+
+  {
+    title: "Lost",
+    artist: "Artist 4",
+    audio: "music/song4.mp3",
+    cover: "https://via.placeholder.com/500/9900ff/ffffff?text=Song+4"
+  },
+
+
+  {
+    title: "Moonlight",
+    artist: "Artist 5",
+    audio: "music/song5.mp3",
+    cover: "https://via.placeholder.com/500/222222/ffffff?text=Song+5"
+  },
+
+
+  {
+    title: "Ocean",
+    artist: "Artist 6",
+    audio: "music/song6.mp3",
+    cover: "https://via.placeholder.com/500/00cccc/ffffff?text=Song+6"
+  },
+
+
+  {
+    title: "Memories",
+    artist: "Artist 7",
+    audio: "music/song7.mp3",
+    cover: "https://via.placeholder.com/500/ff9900/ffffff?text=Song+7"
+  },
+
+
+  {
+    title: "Forever",
+    artist: "Artist 8",
+    audio: "music/song8.mp3",
+    cover: "https://via.placeholder.com/500/ff3366/ffffff?text=Song+8"
+  },
+
+
+  {
+    title: "Beautiful World",
+    artist: "Artist 9",
+    audio: "music/song9.mp3",
+    cover: "https://via.placeholder.com/500/33cc33/ffffff?text=Song+9"
+  },
+
+
+  {
+    title: "The Journey",
+    artist: "Artist 10",
+    audio: "music/song10.mp3",
+    cover: "https://via.placeholder.com/500/6633ff/ffffff?text=Song+10"
+  }
+
+];
+
+
+// ========================================
+// VARIABLES
+// ========================================
+
+let currentSong = 0;
+
+
+// ========================================
+// GET ELEMENTS
+// ========================================
+
+const audio =
+  document.getElementById("audio");
+
+
+const playBtn =
+  document.getElementById("play");
+
+
+const prevBtn =
+  document.getElementById("prev");
+
+
+const nextBtn =
+  document.getElementById("next");
+
+
+const progress =
+  document.getElementById("progress");
+
+
+const volume =
+  document.getElementById("volume");
+
+
+const albumCover =
+  document.getElementById("albumCover");
+
+
+const songTitle =
+  document.getElementById("songTitle");
+
+
+const artist =
+  document.getElementById("artist");
+
+
+const currentTime =
+  document.getElementById("currentTime");
+
+
+const duration =
+  document.getElementById("duration");
+
+
+const songList =
+  document.getElementById("songList");
+
+
+const search =
+  document.getElementById("search");
+
+
+// ========================================
+// CREATE PLAYLIST
+// ========================================
+
+function createPlaylist() {
+
+
+  songList.innerHTML = "";
+
+
+  songs.forEach(
+
+    function(song, index) {
+
+
+      const div =
+        document.createElement("div");
+
+
+      div.className =
+        "song";
+
+
+      div.dataset.index =
+        index;
+
+
+      div.innerHTML = `
+
+        <img
+
+          src="${song.cover}"
+
+          alt="Cover"
+
+        >
+
+
+        <div class="song-info">
+
+          <h3>
+
+            ${song.title}
+
+          </h3>
+
+
+          <p>
+
+            ${song.artist}
+
+          </p>
+
+        </div>
+
+
+        <span>
+
+          ▶
+
+        </span>
+
+      `;
+
+
+      // CLICK SONG
+
+      div.addEventListener(
+
+        "click",
+
+        function() {
+
+
+          currentSong =
+            index;
+
+
+          loadSong();
+
+
+          playSong();
+
+
+        }
+
+      );
+
+
+      songList.appendChild(div);
+
+
+    }
+
+  );
+
+}
+
+
+// ========================================
+// LOAD SONG
+// ========================================
+
+function loadSong() {
+
+
+  const song =
+    songs[currentSong];
+
+
+  songTitle.innerText =
+    song.title;
+
+
+  artist.innerText =
+    song.artist;
+
+
+  albumCover.src =
+    song.cover;
+
+
+  audio.src =
+    song.audio;
+
+
+  progress.value =
+    0;
+
+
+  currentTime.innerText =
+    "0:00";
+
+
+  duration.innerText =
+    "0:00";
+
+
+  // ACTIVE SONG
+
+  document
+
+    .querySelectorAll(".song")
+
+    .forEach(
+
+      function(item) {
+
+
+        item.classList.remove(
+
+          "active"
+
+        );
+
+
+      }
+
+    );
+
+
+  const activeSong =
+
+    document.querySelector(
+
+      `.song[data-index="${currentSong}"]`
+
+    );
+
+
+  if (activeSong) {
+
+
+    activeSong.classList.add(
+
+      "active"
+
+    );
+
+
+  }
+
+}
+
+
+// ========================================
+// PLAY
+// ========================================
+
+function playSong() {
+
+
+  audio.play()
+
+    .then(
+
+      function() {
+
+
+        playBtn.innerText =
+          "⏸";
+
+
+      }
+
+    )
+
+    .catch(
+
+      function(error) {
+
+
+        console.log(
+
+          "Audio Error:",
+
+          error
+
+        );
+
+
+        alert(
+
+          "Song එක play කරන්න බැහැ. " +
+
+          "music folder එකේ MP3 file එක තියෙනවාද බලන්න."
+
+        );
+
+
+      }
+
+    );
+
+}
+
+
+// ========================================
+// PAUSE
+// ========================================
+
+function pauseSong() {
+
+
+  audio.pause();
+
+
+  playBtn.innerText =
+    "▶";
+
+}
+
+
+// ========================================
+// PLAY / PAUSE
+// ========================================
+
+playBtn.addEventListener(
+
+  "click",
+
+  function() {
+
+
+    if (audio.paused) {
+
+
+      playSong();
+
+
+    } else {
+
+
+      pauseSong();
+
+
+    }
+
+  }
+
+);
+
+
+// ========================================
+// NEXT
+// ========================================
+
+nextBtn.addEventListener(
+
+  "click",
+
+  function() {
+
+
+    currentSong++;
+
+
+    if (
+
+      currentSong >=
+
+      songs.length
+
+    ) {
+
+
+      currentSong = 0;
+
+
+    }
+
+
+    loadSong();
+
+
+    playSong();
+
+
+  }
+
+);
+
+
+// ========================================
+// PREVIOUS
+// ========================================
+
+prevBtn.addEventListener(
+
+  "click",
+
+  function() {
+
+
+    currentSong--;
+
+
+    if (
+
+      currentSong < 0
+
+    ) {
+
+
+      currentSong =
+
+        songs.length - 1;
+
+
+    }
+
+
+    loadSong();
+
+
+    playSong();
+
+
+  }
+
+);
+
+
+// ========================================
+// PROGRESS UPDATE
+// ========================================
+
+audio.addEventListener(
+
+  "timeupdate",
+
+  function() {
+
+
+    if (audio.duration) {
+
+
+      const percent =
+
+        (
+
+          audio.currentTime /
+
+          audio.duration
+
+        ) * 100;
+
+
+      progress.value =
+
+        percent;
+
+
+      // CURRENT TIME
+
+      let current =
+
+        Math.floor(
+
+          audio.currentTime
+
+        );
+
+
+      let minutes =
+
+        Math.floor(
+
+          current / 60
+
+        );
+
+
+      let seconds =
+
+        current % 60;
+
+
+      if (
+
+        seconds < 10
+
+      ) {
+
+
+        seconds =
+
+          "0" +
+
+          seconds;
+
+
+      }
+
+
+      currentTime.innerText =
+
+        minutes +
+
+        ":" +
+
+        seconds;
+
+
+    }
+
+  }
+
+);
+
+
+// ========================================
+// SONG DURATION
+// ========================================
+
+audio.addEventListener(
+
+  "loadedmetadata",
+
+  function() {
+
+
+    if (
+
+      isFinite(
+
+        audio.duration
+
+      )
+
+    ) {
+
+
+      let total =
+
+        Math.floor(
+
+          audio.duration
+
+        );
+
+
+      let minutes =
+
+        Math.floor(
+
+          total / 60
+
+        );
+
+
+      let seconds =
+
+        total % 60;
+
+
+      if (
+
+        seconds < 10
+
+      ) {
+
+
+        seconds =
+
+          "0" +
+
+          seconds;
+
+
+      }
+
+
+      duration.innerText =
+
+        minutes +
+
+        ":" +
+
+        seconds;
+
+
+    }
+
+  }
+
+);
+
+
+// ========================================
+// CHANGE PROGRESS
+// ========================================
+
+progress.addEventListener(
+
+  "input",
+
+  function() {
+
+
+    if (
+
+      audio.duration
+
+    ) {
+
+
+      audio.currentTime =
+
+        (
+
+          progress.value /
+
+          100
+
+        ) *
+
+        audio.duration;
+
+
+    }
+
+  }
+
+);
+
+
+// ========================================
+// VOLUME
+// ========================================
+
+volume.addEventListener(
+
+  "input",
+
+  function() {
+
+
+    audio.volume =
+
+      volume.value;
+
+
+  }
+
+);
+
+
+// ========================================
+// SEARCH
+// ========================================
+
+search.addEventListener(
+
+  "input",
+
+  function() {
+
+
+    const text =
+
+      search.value
+
+        .toLowerCase();
+
+
+    document
+
+      .querySelectorAll(".song")
+
+      .forEach(
+
+        function(song) {
+
+
+          const title =
+
+            song
+
+              .querySelector("h3")
+
+              .innerText
+
+              .toLowerCase();
+
+
+          const artistName =
+
+            song
+
+              .querySelector("p")
+
+              .innerText
+
+              .toLowerCase();
+
+
+          if (
+
+            title.includes(text) ||
+
+            artistName.includes(text)
+
+          ) {
+
+
+            song.style.display =
+
+              "flex";
+
+
+          } else {
+
+
+            song.style.display =
+
+              "none";
+
+
+          }
+
+        }
+
+      );
+
+  }
+
+);
+
+
+// ========================================
+// AUTO NEXT SONG
+// ========================================
+
+audio.addEventListener(
+
+  "ended",
+
+  function() {
+
+
+    currentSong++;
+
+
+    if (
+
+      currentSong >=
+
+      songs.length
+
+    ) {
+
+
+      currentSong = 0;
+
+
+    }
+
+
+    loadSong();
+
+
+    playSong();
+
+
+  }
+
+);
+
+
+// ========================================
+// START APP
+// ========================================
+
+createPlaylist();
+
+
+loadSong();
+
+
+</script>
+
+
+</body>
+
+  </html>
